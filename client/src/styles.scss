@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/normalize.css/normalize.css";
+@import "../node_modules/milligram/dist/milligram.min.css";
+
+$primary-color: #9fd533;
+$hover-color: #86b300;
+
+html, body {
+  height: 100%;
+}
+
+
+app-root {
+  display: block;
+  height: 100%;
+}
+
+.button {
+  background-color: $primary-color;
+  border: 0;
+  text-transform: none;
+}
+
+.button:focus {
+  background-color: $primary-color;
+}
+
+.button:hover, .button:active {
+  background-color: $hover-color;
+}
