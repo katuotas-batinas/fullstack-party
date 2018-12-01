@@ -8,62 +8,7 @@
       </ul>
     </div>
     <div class="issue-list" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
-      <div class="box">
-        <div class="box-body clearfix">
-          <fa class="float-left issue-status open" name="exclamation-circle">X</fa>
-          <div class="issue-body">
-            <a routerLink="/issues/1" class="issue-title">Very serious issue</a>
-            <p class="issue-details">
-              #434543 something something something <a href="#" class="primary">user name</a>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="box-body clearfix">
-          <fa class="float-left issue-status open" name="exclamation-circle">X</fa>
-          <div class="issue-body">
-            <a routerLink="/issues/1" class="issue-title">Very serious issue</a>
-            <p class="issue-details">
-              #434543 something something something <a href="#" class="primary">user name</a>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="box-body clearfix">
-          <fa class="float-left issue-status open" name="exclamation-circle">X</fa>
-          <div class="issue-body">
-            <a routerLink="/issues/1" class="issue-title">Very serious issue</a>
-            <p class="issue-details">
-              #434543 something something something <a href="#" class="primary">user name</a>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="box-body clearfix">
-          <fa class="float-left issue-status open" name="exclamation-circle">X</fa>
-          <div class="issue-body">
-            <a routerLink="/issues/1" class="issue-title">Very serious issue</a>
-            <p class="issue-details">
-              #434543 something something something <a href="#" class="primary">user name</a>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="box-body clearfix">
-          <fa class="float-left issue-status open" name="exclamation-circle">X</fa>
-          <div class="issue-body">
-            <a routerLink="/issues/1" class="issue-title">Very serious issue</a>
-            <p class="issue-details">
-              #434543 something something something <a href="#" class="primary">user name</a>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="box">
+      <div class="box list-entry" *ngFor="let issue of issues">
         <div class="box-body clearfix">
           <fa class="float-left issue-status open" name="exclamation-circle">X</fa>
           <div class="issue-body">

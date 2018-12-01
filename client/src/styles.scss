@@ -7,6 +7,7 @@
 html, body {
   height: 100%;
   font-size: 14px;
+  min-width: 360px;
 }
 
 a {
@@ -68,6 +69,7 @@ app-root {
   padding-top: 112px;
   height: 100%;
   background-color: $background-color;
+  overflow: hidden;
 }
 
 .box {
@@ -160,4 +162,8 @@ app-root {
 
 .avatar {
   max-width: 64px;
+}
+
+.list-entry + .list-entry  {
+  margin-top: 20px;
 }

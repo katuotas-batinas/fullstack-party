@@ -11,6 +11,8 @@ export class IssueListComponent implements OnInit {
     theme: 'minimal-dark',
   };
 
+  public issues = [1, 2, 3, 4, 5];
+
   constructor() { }
 
   ngOnInit() {
