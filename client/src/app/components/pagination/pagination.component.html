@@ -1,0 +1,11 @@
+<div class="pagination">
+  <ul>
+    <li class="previous-page"><a href="#" [class.disabled]="currentPage === 1" (click)="openPage(currentPage - 1, $event)">Previous</a></li>
+    <li class="page-no" *ngIf="showFirst"><a href="#" (click)="openPage(1, $event)">1</a></li>
+    <li *ngIf="showFirst">...</li>
+    <li class="page-no" [class.active]="currentPage == page" *ngFor="let page of pages"><a href="#" (click)="openPage(page, $event)">{{ page }}</a></li>
+    <li *ngIf="showLast">...</li>
+    <li class="page-no" *ngIf="showLast"><a href="#" (click)="openPage(pagesTotal, $event)">{{ pagesTotal }}</a></li>
+    <li class="next-page"><a href="#" [class.disabled]="currentPage === pagesTotal" (click)="openPage(currentPage + 1, $event)">Next</a></li>
+  </ul>
+</div>

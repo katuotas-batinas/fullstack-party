@@ -25,6 +25,11 @@ a.primary:hover {
   text-decoration: underline;
 }
 
+a.disabled {
+  color: $faded-color;
+  pointer-events:none;
+}
+
 ul {
   list-style: none;
   margin: 0;
@@ -81,17 +86,6 @@ app-root {
   border-bottom: 1px solid #e6e6e6;
   padding: 25px 20px;
 }
-// .box.bubble:before {
-//     top: 25px;
-//     left: -10px;
-//     border-width: 10px 10px 10px 0;
-//     border-color: transparent #fff;
-//     content: "";
-//     position: absolute;
-//     border-style: solid;
-//     display: block;
-//     width: 0;
-// }
 
 .box.bubble:after, .box.bubble:before {
 	right: 100%;

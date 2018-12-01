@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { IssueListComponent } from './components/issue-list/issue-list.component';
 import { HeaderComponent } from './components/header/header.component';
 import { IssueEntryComponent } from './components/issue-entry/issue-entry.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { IssueEntryComponent } from './components/issue-entry/issue-entry.compon
     IssueListComponent,
     HeaderComponent,
     IssueEntryComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
