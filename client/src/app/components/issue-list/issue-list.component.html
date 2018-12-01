@@ -1,0 +1,38 @@
+<app-header></app-header>
+<div class="page-container">
+  <div class="content">
+    <div class="issue-menu">
+      <ul>
+        <li class="active"><a href="#"><fa name="exclamation-circle"></fa> Open</a></li>
+        <li><a href="#"><fa name="check-circle"></fa> Closed</a></li>
+      </ul>
+    </div>
+    <div class="issue-list" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+      <div class="issue-entry clearfix">
+        <fa class="float-left issue-status open" name="exclamation-circle">X</fa>
+        <div class="issue-body float-left">
+          <a href="" class="issue-title">Very serious issue</a>
+          <p class="issue-details">
+            #434543 something something something <a href="#">user name</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="pagination">
+      <ul>
+        <li class="previous-page"><a href="#">Previous</a></li>
+        <li class="page-no active"><a href="#">1</a></li>
+        <li class="page-no"><a href="#">2</a></li>
+        <li class="page-no"><a href="#">3</a></li>
+        <li>...</li>
+        <li class="page-no"><a href="#">9</a></li>
+        <li class="page-no"><a href="#">10</a></li>
+        <li class="next-page"><a href="#">Next</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wallpaper">
+    <h1 class="slogan">Full Stack Developer Task</h1>
+    <p>by <img src="/assets/img/logo_xs.png"/></p>
+  </div>
+</div>

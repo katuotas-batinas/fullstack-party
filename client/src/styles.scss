@@ -1,14 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/normalize.css/normalize.css";
 @import "../node_modules/milligram/dist/milligram.min.css";
-
-$primary-color: #9fd533;
-$hover-color: #86b300;
+@import "variables.scss";
 
 html, body {
   height: 100%;
+  font-size: 14px;
 }
 
+a {
+  color: $link-color;
+}
+
+a:hover {
+  color: $link-hover-color;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+}
 
 app-root {
   display: block;
@@ -28,4 +39,11 @@ app-root {
 
 .button:hover, .button:active {
   background-color: $hover-color;
+}
+
+.page-container {
+  display: block;
+  padding-top: 112px;
+  height: 100%;
+  background-color: $background-color;
 }
