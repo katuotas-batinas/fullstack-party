@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/normalize.css/normalize.css";
+@import "../node_modules/typeface-roboto/index.css";
 @import "../node_modules/milligram/dist/milligram.min.css";
 @import "variables.scss";
 
@@ -16,8 +17,24 @@ a:hover {
   color: $link-hover-color;
 }
 
+a.primary {
+  color: $primary-color;
+}
+
+a.primary:hover {
+  text-decoration: underline;
+}
+
 ul {
   list-style: none;
+  margin: 0;
+}
+
+// h1, h2, h3, h4, h5, h6 {
+//   color: #333333;
+// }
+
+p {
   margin: 0;
 }
 
@@ -38,7 +55,7 @@ app-root {
 }
 
 .button:hover, .button:active {
-  background-color: $hover-color;
+  background-color: $primary-hover-color;
 }
 
 .page-container {
@@ -46,4 +63,107 @@ app-root {
   padding-top: 112px;
   height: 100%;
   background-color: $background-color;
+}
+
+.box {
+  background: #fff;
+  border-radius: 5px;
+  border-left: 1px #e3e3e3 solid;
+  border-bottom: 1px #e3e3e3 solid;
+  position: relative;
+}
+
+.box-body {
+    padding: 25px 30px;
+}
+
+.box-header {
+  border-bottom: 1px solid #e6e6e6;
+  padding: 25px 20px;
+}
+// .box.bubble:before {
+//     top: 25px;
+//     left: -10px;
+//     border-width: 10px 10px 10px 0;
+//     border-color: transparent #fff;
+//     content: "";
+//     position: absolute;
+//     border-style: solid;
+//     display: block;
+//     width: 0;
+// }
+
+.box.bubble:after, .box.bubble:before {
+	right: 100%;
+	top: 35px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.box.bubble:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #fff;
+	border-width: 10px;
+	margin-top: -10px;
+}
+.box.bubble:before {
+	border-color: rgba(227, 227, 227, 0);
+	border-right-color: #e3e3e3;
+	border-width: 11px;
+	margin-top: -11px;
+}
+
+.faded {
+  color: $faded-color;
+}
+
+.badge {
+  padding: 8px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+.badge.primary {
+  background: $primary-color;
+  border-bottom: 1px solid $primary-hover-color;
+  color: #fff;
+}
+
+.status-badge {
+  text-transform: uppercase;
+  margin-right: 15px;
+}
+
+.row .column {
+    padding: 0 0.0rem;
+}
+
+@media (min-width: 40rem) {
+  .row .column {
+      padding: 0 5.0rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .row .column {
+      padding: 0 15.0rem;
+  }
+}
+
+@media (min-width: 120rem) {
+  .row .column {
+      padding: 0 15.0rem;
+  }
+}
+
+.image-circle {
+  border-radius: 50%;
+}
+
+.avatar {
+  max-width: 64px;
 }
