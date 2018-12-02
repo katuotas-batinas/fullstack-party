@@ -35,7 +35,7 @@ $router->get('/authorize', function (Request $request) use ($router) {
         'redirect_uri' => url('/'),
       ]
     ]);
-    
+
     parse_str($response->getBody()->getContents(), $results);
   } catch(RequestException $e) {
     return redirect('/');
@@ -67,7 +67,7 @@ $router->get('/api/config', function (Request $request) use ($router) {
 
     return response()->json([
       'authorizationUrl' => $authorizationUrl,
-      'accessToken' => $request->session()->get('access_token'),
+      'isLoggedIn' => $request->session()->get('access_token') ? true : false,
     ]);
 });
 
