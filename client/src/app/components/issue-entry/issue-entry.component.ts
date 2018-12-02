@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-issue-entry',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IssueEntryComponent implements OnInit {
 
-  constructor() { }
+    public isLoading;
 
-  ngOnInit() {
-  }
+    public issue;
+
+    public error;
+
+    constructor(private activatedRoute: ActivatedRoute,
+        private http: HttpClient) { }
+
+    ngOnInit() {
+        this.isLoading = true;
+
+        this.http.get('api/issue', {params: this.activatedRoute.snapshot.params})
+            .subscribe(res => {
+                this.issue = res;
+                this.isLoading = false;
+            }, err => {
+                this.error = err.error.message;
+                this.isLoading = false;
+            })
+    }
 
 }

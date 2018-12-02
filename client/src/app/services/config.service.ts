@@ -12,7 +12,7 @@ export class ConfigService {
 
   load() {
     return new Promise((resolve, reject) => {
-      this.http.get('http://localhost:8000/api/config')
+      this.http.get('api/config')
         .subscribe((res) => {
           this.config = res;
 

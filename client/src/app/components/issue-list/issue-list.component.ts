@@ -57,7 +57,7 @@ export class IssueListComponent implements OnInit {
       this.issues = null;
       this.pagination = null;
 
-      this.request = this.http.get<IssuesResponse>('http://localhost:8000/api/issues', {params: this.activatedRoute.snapshot.queryParams})
+      this.request = this.http.get<IssuesResponse>('api/issues', {params: this.activatedRoute.snapshot.queryParams})
         .subscribe(res => {
             this.issues = res.data;
             this.pagination = res.pagination;
@@ -65,8 +65,6 @@ export class IssueListComponent implements OnInit {
         }, err => {
             this.error = err.error.message;
             this.isLoading = false;
-            this.issues = [{title: 'test issue', user: {}}];
-            this.pagination = null;
         });
   }
 

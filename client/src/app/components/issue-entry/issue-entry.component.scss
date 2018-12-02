@@ -2,7 +2,7 @@
 
 .content{
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .issue-header {
@@ -25,6 +25,14 @@
 .status-badge {
   float: left;
   margin-top: -5px;
+}
+
+.issue-title {
+    margin: 0;
+}
+
+.issue-body {
+    margin: 20px 0;
 }
 
 .issue-meta {

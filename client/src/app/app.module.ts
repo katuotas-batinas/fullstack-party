@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { TimeSincePipe } from './pipes/time-since.pipe';
     HttpClientModule,
     MalihuScrollbarModule.forRoot(),
     AngularFontAwesomeModule,
+    MarkdownModule.forRoot(),
   ],
   providers: [
     {

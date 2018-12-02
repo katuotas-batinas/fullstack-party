@@ -18,7 +18,7 @@
                         <fa *ngIf="issue.state === 'open'" class="float-left issue-status open" name="exclamation-circle"></fa>
                         <fa *ngIf="issue.state === 'closed'" class="float-left issue-status closed" name="check-circle"></fa>
                         <div class="issue-body">
-                            <a routerLink="/issues/1" class="issue-title">{{ issue.title }}</a>
+                            <a [routerLink]="['/issues', issue.repository.owner.login, issue.repository.name, issue.number]" class="issue-title">{{ issue.title }}</a>
                             <span *ngFor="let label of issue.labels" [ngStyle]="{'background-color': '#' + label.color}" class="label">{{ label.name }}</span>
                             <p class="issue-details" *ngIf="!issue.closed_at">
                                 #{{ issue.number }} opened {{ issue.created_at | timeSince }} ago by <a [href]="issue.user.html_url" target="_blank" class="primary">{{ issue.user.login }}</a>
