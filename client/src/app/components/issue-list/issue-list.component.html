@@ -1,27 +1,50 @@
 <app-header></app-header>
 <div class="page-container">
-  <div class="content">
-    <div class="issue-menu">
-      <ul>
-        <li class="active"><a href="#"><fa name="exclamation-circle"></fa> Open</a></li>
-        <li><a href="#"><fa name="check-circle"></fa> Closed</a></li>
-      </ul>
-    </div>
-    <div class="issue-list" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
-      <div class="box list-entry" *ngFor="let issue of issues">
-        <div class="box-body clearfix">
-          <fa class="float-left issue-status open" name="exclamation-circle">X</fa>
-          <div class="issue-body">
-            <a routerLink="/issues/1" class="issue-title">Very serious issue</a>
-            <p class="issue-details">
-              #434543 something something something <a href="#" class="primary">user name</a>
-            </p>
-          </div>
+    <div class="content">
+        <div class="issue-menu">
+            <ul>
+                <li [class.active]="activatedRoute.snapshot.queryParams.state === 'open'">
+                    <a [routerLink]="['/issues']" [queryParams]="{state: 'open', page: 1}" queryParamsHandling="merge"><fa name="exclamation-circle"></fa> Open</a>
+                </li>
+                <li [class.active]="activatedRoute.snapshot.queryParams.state === 'closed'">
+                    <a [routerLink]="['/issues']" [queryParams]="{state: 'closed', page: 1}" queryParamsHandling="merge"><fa name="check-circle"></fa> Closed</a>
+                </li>
+            </ul>
         </div>
-      </div>
+        <div class="issue-list" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+            <div *ngIf="issues">
+                <div class="box list-entry" *ngFor="let issue of issues">
+                    <div class="box-body clearfix">
+                        <fa *ngIf="issue.state === 'open'" class="float-left issue-status open" name="exclamation-circle"></fa>
+                        <fa *ngIf="issue.state === 'closed'" class="float-left issue-status closed" name="check-circle"></fa>
+                        <div class="issue-body">
+                            <a routerLink="/issues/1" class="issue-title">{{ issue.title }}</a>
+                            <span *ngFor="let label of issue.labels" [ngStyle]="{'background-color': '#' + label.color}" class="label">{{ label.name }}</span>
+                            <p class="issue-details" *ngIf="!issue.closed_at">
+                                #{{ issue.number }} opened {{ issue.created_at | timeSince }} ago by <a [href]="issue.user.html_url" target="_blank" class="primary">{{ issue.user.login }}</a>
+                            </p>
+                            <p class="issue-details" *ngIf="issue.closed_at">
+                                #{{ issue.number }} closed {{ issue.created_at | timeSince }} ago by <a [href]="issue.user.html_url" target="_blank" class="primary">{{ issue.user.login }}</a>
+                            </p>
+                        </div>
+                        <span *ngIf="issue.comments" class="comments faded">
+                            <fa name="comment-o"></fa> {{ issue.comments }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="issues && !issues.length">
+                <p>No issues.</p>
+            </div>
+            <div *ngIf="!issues && isLoading">
+                <p>Fetching issues...</p>
+            </div>
+            <div *ngIf="error">
+                <p>{{ error }}</p>
+            </div>
+        </div>
+        <app-pagination *ngIf="pagination" [currentPage]="pagination.currentPage" [lastPage]="pagination.lastPage" (onClick)="openPage($event)"></app-pagination>
     </div>
-    <app-pagination [currentPage]="1" [pagesTotal]="12"></app-pagination>
-  </div>
   <div class="wallpaper">
     <h1 class="slogan">Full Stack Developer Task</h1>
     <p>by <img src="/client/assets/img/logo_xs.png"/></p>

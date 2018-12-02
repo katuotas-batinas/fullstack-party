@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -7,65 +7,85 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PaginationComponent implements OnInit {
 
-  @Input()
-  public currentPage;
 
-  @Input()
-  public pagesTotal;
+    private _currentPage;
 
-  public pages = [];
-
-  public showFirst: boolean;
-
-  public showLast: boolean;
-
-  constructor() { }
-
-  ngOnInit() {
-    this.rebuildLinks();
-  }
-
-  openPage(page, e) {
-    e.preventDefault();
-
-    if(page < 1 || page > this.pagesTotal) {
-      return;
+    @Input()
+    set currentPage(page) {
+        this._currentPage = page;
+        this.rebuildLinks();
     }
 
-    this.currentPage = page;
-    this.rebuildLinks();
-  }
-
-  rebuildLinks() {
-    this.pages = [];
-    
-    let start = Math.max(this.currentPage - 1, 1);
-    let end = Math.min(this.currentPage + 1, this.pagesTotal);
-
-    if(start < 3) {
-      start = 1;
-      end = Math.min(4, this.pagesTotal);
-    }
-    else if(this.currentPage > this.pagesTotal - 3) {
-      start = this.pagesTotal - 3;
-      end = this.pagesTotal;
+    get currentPage() {
+        return this._currentPage;
     }
 
-    if(start > 1) {
-      this.showFirst = true;
-    } else {
-      this.showFirst = false;
+    private _lastPage;
+
+    @Input()
+    set lastPage(page) {
+        this._lastPage = page;
+        this.rebuildLinks();
     }
 
-    if(end < this.pagesTotal) {
-      this.showLast = true;
-    } else {
-      this.showLast = false;
+    get lastPage() {
+        return this._lastPage;
     }
 
-    for(let i = start; i <= end; i++) {
-      this.pages.push(i);
+    @Output()
+    public onClick = new EventEmitter();
+
+    public pages = [];
+
+    public showFirst: boolean;
+
+    public showLast: boolean;
+
+    constructor() { }
+
+    ngOnInit() {
     }
-  }
+
+    openPage(page, e) {
+        e.preventDefault();
+
+        if(page < 1 || page > this.lastPage) {
+          return;
+        }
+
+        this.onClick.emit(page);
+    }
+
+    rebuildLinks() {
+        this.pages = [];
+
+        let start = Math.max(this.currentPage - 1, 1);
+        let end = Math.min(this.currentPage + 1, this.lastPage);
+
+        if(start < 3) {
+            start = 1;
+            end = Math.min(4, this.lastPage);
+        }
+        else if(this.currentPage > this.lastPage - 3) {
+            start = this.lastPage - 3;
+            end = this.lastPage;
+        }
+
+        if(start > 1) {
+            this.showFirst = true;
+        } else {
+            this.showFirst = false;
+        }
+
+        if(end < this.lastPage) {
+            this.showLast = true;
+        } else {
+            this.showLast = false;
+        }
+
+        for(let i = start; i <= end; i++) {
+            this.pages.push(i);
+        }
+    }
 
 }

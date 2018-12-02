@@ -76,6 +76,8 @@
 
 .issue-title {
   color: #303030;
+  font-size: 16px;
+  margin-right: 15px;
 }
 
 .issue-title:hover {
@@ -84,20 +86,30 @@
 
 .issue-details {
   font-size: 12px;
-  margin: 0;
+  margin-top: 5px;
 }
 
 .issue-body {
-  margin-left: 30px;
+  margin: 0 30px;
 }
 
 .open {
   color: $primary-color;
 }
 
+.closed {
+  color: $danger-color;
+}
+
 .issue-status {
   font-size: 16px;
   float: left;
+}
+
+.comments {
+    position: absolute;
+    top: 25px;
+    right: 30px;
 }
 
 .slogan {

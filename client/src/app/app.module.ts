@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
@@ -16,6 +16,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { ConfigService } from './services/config.service';
 import { GuestGuard } from './guards/guest.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { TimeSincePipe } from './pipes/time-since.pipe';
 
 @NgModule({
   declarations: [
@@ -25,11 +26,12 @@ import { AuthGuard } from './guards/auth.guard';
     HeaderComponent,
     IssueEntryComponent,
     PaginationComponent,
+    TimeSincePipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule,
+    HttpClientModule,
     MalihuScrollbarModule.forRoot(),
     AngularFontAwesomeModule,
   ],
