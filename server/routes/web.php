@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use App\Libraries\GitHub;
 
 /*
@@ -74,7 +72,7 @@ $router->get('/api/issue', function (Request $request, GitHub $github) {
             'number' => $request->input('number'),
             'access_token' => $request->session()->get('access_token'),
         ]);
-        
+
         return response()->json($issue);
     } catch(Exception $e) {
         return response()->json(['message' => $e->getMessage()], 400);
@@ -82,5 +80,5 @@ $router->get('/api/issue', function (Request $request, GitHub $github) {
 });
 
 $router->get('{all:.*}', function ($path) use ($router) {
-  return file_get_contents($router->app->basePath('public/client/index.html'));
+    return file_get_contents($router->app->basePath('public/client/index.html'));
 });
