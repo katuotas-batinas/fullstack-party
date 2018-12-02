@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use App\Libraries\GitHub;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,120 +16,69 @@ use GuzzleHttp\Exception\RequestException;
 |
 */
 
-$router->get('/authorize', function (Request $request) use ($router) {
-  if(!$request->input('code')) {
-    return redirect('/');
-  }
+$router->get('/authorize', function (Request $request, GitHub $github) {
+    try {
+        $accessToken = $github->getAccessToken([
+            'code' => $request->input('code')
+        ]);
 
-  $client = new Client();
+        $request->session()->put('access_token', $accessToken);
 
-  $results = null;
-
-  $requestUrl = 'https://github.com/login/oauth/access_token';
-
-  try {
-    $response = $client->post($requestUrl, [
-      'json' => [
-        'client_id' => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'code' => $request->input('code'),
-        'redirect_uri' => url('/'),
-      ]
-    ]);
-
-    parse_str($response->getBody()->getContents(), $results);
-  } catch(RequestException $e) {
-    return redirect('/');
-  }
-
-  if(!$results || !isset($results['access_token'])) {
-    return redirect('/');
-  }
-
-  $request->session()->put('access_token', $results['access_token']);
-
-  return redirect('/');
+        return redirect('/issues');
+    } catch(Exception $e) {
+        return redirect('/login');
+    }
 });
 
 $router->get('/logout', function(Request $request) {
-  $request->session()->flush();
+    $request->session()->flush();
 
-  return redirect('/');
+    return redirect('/login');
 });
 
-$router->get('/api/config', function (Request $request) use ($router) {
-    $query = http_build_query([
-      'client_id' => env('GITHUB_CLIENT_ID'),
-      'redirect_uri' => url('authorize'),
-      'scope' => 'user public_repo',
+$router->get('/api/config', function (Request $request, GitHub $github) {
+    $authorizationUrl = $github->getAuthorizationUrl([
+        'redirect_uri' => url('authorize'),
+        'scope' => 'user public_repo',
     ]);
-
-    $authorizationUrl = 'https://github.com/login/oauth/authorize' . '?' . $query;
 
     return response()->json([
-      'authorizationUrl' => $authorizationUrl,
-      'isLoggedIn' => $request->session()->get('access_token') ? true : false,
+        'authorizationUrl' => $authorizationUrl,
+        'isLoggedIn' => $request->session()->get('access_token') ? true : false,
     ]);
 });
 
-$router->get('/api/issues', function (Request $request) use ($router) {
-  $client = new Client();
+$router->get('/api/issues', function (Request $request, GitHub $github) {
+    try {
+        $issues = $github->getIssues([
+            'access_token' => $request->session()->get('access_token')
+        ]);
 
-  $results = null;
-
-  $requestUrl = 'https://api.github.com/issues';
-
-  try {
-    $response = $client->get($requestUrl, [
-      'query' => [
-        'access_token' => $request->session()->get('access_token'),
-      ]
-    ]);
-
-    $results = json_decode($response->getBody()->getContents());
-  } catch(RequestException $e) {
-    return response([
-      'message' => $e->getResponse()->getReasonPhrase(),
-    ], $e->getResponse()->getStatusCode());
-  }
-
-  return response()->json($results);
+        return response()->json($issues);
+    } catch(Exception $e) {
+        return response()->json(['message' => $e->getMessage()], 400);
+    }
 });
 
-$router->get('/api/issue', function (Request $request) use ($router) {
-  $this->validate($request, [
-    'owner' => 'required',
-    'repo' => 'required',
-    'number' => 'required',
-  ]);
-
-  $client = new Client();
-
-  $results = null;
-
-  $requestUrl = implode('/', [
-    'https://api.github.com/repos',
-    $request->input('owner'),
-    $request->input('repo'),
-    'issues',
-    $request->input('number'),
-  ]);
-
-  try {
-    $response = $client->get($requestUrl, [
-      'query' => [
-        'access_token' => $request->session()->get('access_token'),
-      ]
+$router->get('/api/issue', function (Request $request, GitHub $github) {
+    $this->validate($request, [
+        'owner' => 'required',
+        'repo' => 'required',
+        'number' => 'required',
     ]);
 
-    $results = json_decode($response->getBody()->getContents());
-  } catch(RequestException $e) {
-    return response([
-      'message' => $e->getResponse()->getReasonPhrase(),
-    ], $e->getResponse()->getStatusCode());
-  }
-
-  return response()->json($results);
+    try {
+        $issue = $github->getIssue([
+            'owner' => $request->input('owner'),
+            'repo' => $request->input('repo'),
+            'number' => $request->input('number'),
+            'access_token' => $request->session()->get('access_token'),
+        ]);
+        
+        return response()->json($issue);
+    } catch(Exception $e) {
+        return response()->json(['message' => $e->getMessage()], 400);
+    }
 });
 
 $router->get('{all:.*}', function ($path) use ($router) {
