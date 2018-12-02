@@ -10,24 +10,26 @@ import { IssuesResponse } from '../../interfaces/issues-response';
 })
 export class IssueListComponent implements OnInit {
 
-  public scrollbarOptions = {
-    theme: 'minimal-dark',
-  };
+    public scrollbarOptions = {
+        theme: 'minimal-dark',
+    };
 
-  public isLoading = false;
+    public isLoading = false;
 
-  public issues;
+    public issues;
 
-  public pagination;
+    public pagination;
 
-  public error;
+    public error;
 
-  private request;
+    private request;
+
+    private routerEvents;
 
     constructor(private http: HttpClient,
         private router: Router,
         public activatedRoute: ActivatedRoute) {
-        this.router.events.subscribe((e) => {
+        this.routerEvents = this.router.events.subscribe((e) => {
             if(e instanceof NavigationEnd) {
                 if(!this.activatedRoute.snapshot.queryParams.state) {
                     this.router.navigate(['/issues'], { queryParams: {state: 'open'}, queryParamsHandling: 'merge' })
@@ -39,7 +41,10 @@ export class IssueListComponent implements OnInit {
     }
 
   ngOnInit() {
+  }
 
+  ngOnDestroy() {
+      this.routerEvents.unsubscribe();
   }
 
   getIssues() {
@@ -60,6 +65,8 @@ export class IssueListComponent implements OnInit {
         }, err => {
             this.error = err.error.message;
             this.isLoading = false;
+            this.issues = [{title: 'test issue', user: {}}];
+            this.pagination = null;
         });
   }
 
