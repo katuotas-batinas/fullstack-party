@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { URLSearchParams } from '@angular/http';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(public config: ConfigService) { }
 
   ngOnInit() {
   }
