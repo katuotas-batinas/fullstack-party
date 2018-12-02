@@ -49,7 +49,9 @@ $router->get('/api/config', function (Request $request, GitHub $github) {
 $router->get('/api/issues', function (Request $request, GitHub $github) {
     try {
         $issues = $github->getIssues([
-            'access_token' => $request->session()->get('access_token')
+            'access_token' => $request->session()->get('access_token'),
+            'state' => $request->input('state') ?: 'open',
+            'page' => $request->input('page') ? (int) $request->input('page') : 1,
         ]);
 
         return response()->json($issues);

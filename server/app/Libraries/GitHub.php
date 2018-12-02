@@ -2,6 +2,7 @@
 namespace App\Libraries;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 use Exception;
 
@@ -85,6 +86,7 @@ class GitHub
     {
         $defaultOptions = [
             'client_id' => env('GITHUB_CLIENT_ID'),
+            'per_page' => 10,
         ];
 
         $options = array_merge($defaultOptions, $options);
@@ -95,10 +97,36 @@ class GitHub
 
         try {
             $response = $this->client->get($requestUrl, [
-                'query' => $options
+                'query' => $options,
             ]);
 
-            $results = json_decode($response->getBody()->getContents());
+            // Parse links header and create pagination
+
+            $links = Psr7\parse_header($response->getHeader('Link'));
+
+            $pagination = null;
+
+            if(isset($links[1]))
+            {
+                $lastPage = $options['page'];
+
+                if($links[1]['rel'] === 'last')
+                {
+                    parse_str($links[1][0], $lastLink);
+
+                    $lastPage = (int) filter_var($lastLink['page'], FILTER_SANITIZE_NUMBER_INT);
+                }
+
+                $pagination = [
+                    'currentPage' => isset($options['page']) ? $options['page'] : 1,
+                    'lastPage' => $lastPage,
+                ];
+            }
+
+            $results = [
+                'data' => json_decode($response->getBody()->getContents()),
+                'pagination' => $pagination,
+            ];
         } catch(RequestException $e) {
             throw new Exception($e->getResponse()->getReasonPhrase());
         }
