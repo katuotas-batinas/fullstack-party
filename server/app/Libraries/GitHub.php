@@ -166,6 +166,23 @@ class GitHub
             throw new Exception($e->getResponse()->getReasonPhrase());
         }
 
+        // Load comments
+
+        if($results->comments)
+        {
+            try {
+                $response = $this->client->get($results->comments_url, [
+                    'query' => [
+                        'access_token' => $options['access_token'],
+                    ]
+                ]);
+
+                $results->comments_entries = json_decode($response->getBody()->getContents());
+            } catch(RequestException $e) {
+                throw new Exception($e->getResponse()->getReasonPhrase());
+            }
+        }
+
         return $results;
     }
 }
