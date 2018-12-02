@@ -35,6 +35,7 @@ $router->get('/authorize', function (Request $request) use ($router) {
         'redirect_uri' => url('/'),
       ]
     ]);
+    
     parse_str($response->getBody()->getContents(), $results);
   } catch(RequestException $e) {
     return redirect('/');
@@ -45,6 +46,12 @@ $router->get('/authorize', function (Request $request) use ($router) {
   }
 
   $request->session()->put('access_token', $results['access_token']);
+
+  return redirect('/');
+});
+
+$router->get('/logout', function(Request $request) {
+  $request->session()->flush();
 
   return redirect('/');
 });
