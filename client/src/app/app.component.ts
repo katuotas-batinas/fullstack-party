@@ -9,7 +9,7 @@ export class AppComponent implements OnInit {
   title = 'client';
 
   ngOnInit() {
-    $('.preload-container').fadeOut();
+    $('.preload-screen').fadeOut(1000);
   }
 
 }

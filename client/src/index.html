@@ -13,7 +13,7 @@
       background-color: #0b0f27;
     }
 
-    .preload-container {
+    .preload-screen {
       width: 100%;
       height: 100%;
       display: block;
@@ -21,18 +21,22 @@
       position: absolute;
     }
 
+    .preload-container {
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-top: -68px;
+      margin-left: -77px;
+    }
+
     .sk-folding-cube {
-      margin: 20px auto;
+      margin: 50px auto 0;
       width: 40px;
       height: 40px;
       position: relative;
       -webkit-transform: rotateZ(45deg);
               transform: rotateZ(45deg);
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin-top: -28px;
-      margin-right: -28px;
     }
 
     .sk-folding-cube .sk-cube {
@@ -116,12 +120,15 @@
   </style>
 </head>
 <body>
-  <div class="preload-container">
-    <div class="sk-folding-cube">
-      <div class="sk-cube1 sk-cube"></div>
-      <div class="sk-cube2 sk-cube"></div>
-      <div class="sk-cube4 sk-cube"></div>
-      <div class="sk-cube3 sk-cube"></div>
+  <div class="preload-screen">
+    <div class="preload-container">
+      <img src="/client/assets/img/logo.png" alt="testio" height="40"/>
+      <div class="sk-folding-cube">
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+      </div>
     </div>
   </div>
   <app-root></app-root>
