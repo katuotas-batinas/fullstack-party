@@ -8,8 +8,8 @@ import { IssueEntryComponent } from './components/issue-entry/issue-entry.compon
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
-  {path: 'issues', component: IssueListComponent, canActivate: []},
-  {path: 'issues/:owner/:repo/:number', component: IssueEntryComponent, canActivate: []},
+  {path: 'issues', component: IssueListComponent, canActivate: [AuthGuard]},
+  {path: 'issues/:owner/:repo/:number', component: IssueEntryComponent, canActivate: [AuthGuard]},
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '**', redirectTo: 'login', pathMatch: 'full'},
 ];
