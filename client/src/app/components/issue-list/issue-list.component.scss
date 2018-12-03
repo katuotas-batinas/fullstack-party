@@ -6,7 +6,6 @@
 
 .wallpaper {
   width: 50%;
-  display: block;
 }
 
 .content, .wallpaper {
@@ -15,16 +14,13 @@
 }
 
 .wallpaper {
+  @extend %flexbox-center;
   background: url(/assets/img/list_bg_2.jpg) no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   color: #fff;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   text-align: center;
 }
 
